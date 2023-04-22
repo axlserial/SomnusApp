@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.sumnus"
+    namespace "com.somnus"
     defaultConfig {
-        applicationId "com.sumnus"
+        applicationId "com.somnus"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

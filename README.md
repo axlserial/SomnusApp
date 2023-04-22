@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Sumnus es un proyecto de la asignatura de Desarrollo Ágil de Software de la Universidad Tecnológica de la Mixteca. El proyecto utiliza como metodología ágil de desarrollo Scrum. Consiste en una aplicación móvil enfocada en mejorar la calidad de sueño de los estudiantes.
+Somnus es un proyecto de la asignatura de Desarrollo Ágil de Software de la Universidad Tecnológica de la Mixteca. El proyecto utiliza como metodología ágil de desarrollo Scrum. Consiste en una aplicación móvil (enfocada en Android) orientada a mejorar la calidad de sueño de los estudiantes universitarios.
 
 ## Instalación y ejecución
 

@@ -1,4 +1,4 @@
-package com.sumnus;
+package com.somnus;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
