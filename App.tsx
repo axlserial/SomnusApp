@@ -1,13 +1,14 @@
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
+import SplashScreen from 'react-native-splash-screen';
+import {ToastAndroid, StatusBar} from 'react-native';
+import {Colors} from 'react-native-ui-lib';
+import {useEffect, useState} from 'react';
+import Main from './src/Main';
 import TrackPlayer, {
 	Capability,
 	AppKilledPlaybackBehavior,
 } from 'react-native-track-player';
-import {useEffect, useState} from 'react';
-import {Colors} from 'react-native-ui-lib';
-import {ToastAndroid, StatusBar} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import SplashScreen from 'react-native-splash-screen';
-import Main from './src/Main';
 
 const App = () => {
 	// Indica si es la primera vez que se inicia la aplicación
@@ -52,9 +53,11 @@ const App = () => {
 	return (
 		<>
 			<StatusBar backgroundColor={Colors.background} />
-			<NavigationContainer>
-				<Main />
-			</NavigationContainer>
+			<GestureHandlerRootView style={{ flex: 1 }}>
+				<NavigationContainer>
+					<Main />
+				</NavigationContainer>
+			</GestureHandlerRootView>
 		</>
 	);
 };
