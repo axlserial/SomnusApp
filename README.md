@@ -19,7 +19,7 @@ Somnus es un proyecto de la asignatura de Desarrollo Ágil de Software de la Uni
 ### Ejecución
 
 1. Tener un emulador corriendo o un dispositivo conectado
-2. En Android, ejecutar la aplicación con `npm run android`
+2. En Android, ejecutar la aplicación con `npm run android`, si esto no funciona, hacer lo siguiente: `npx react-native start` y de las opciones que salen presionar la tecla `a` (run on Android)
 
 ### Ejecución de pruebas
 
