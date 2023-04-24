@@ -40,13 +40,7 @@ const Main = () => {
 			screenOptions={() => ({
 				tabBarActiveTintColor: '#337AA6',
 				tabBarStyle: {
-					display: 'flex',
-					position: 'absolute',
-					bottom: 5,
-					left: 5,
-					right: 5,
 					backgroundColor: '#0B1E45',
-					borderRadius: 25,
 					height: 65,
 					borderTopWidth: 0,
 				},
