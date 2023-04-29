@@ -1,104 +1,197 @@
-import { Alert, Button, Dimensions, FlatList, Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, FlatList, ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import View from 'react-native-ui-lib/view';
 import Text from 'react-native-ui-lib/text';
 import { NavigationProp } from '@react-navigation/native';
-import React from 'react'
-import Carousel from 'react-native-snap-carousel'
-import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from './CarouselCardItem';
+import React, { useEffect, useState } from 'react'
+import { ScrollView } from 'react-native-gesture-handler';
+import { Card, Carousel } from 'react-native-ui-lib';
+import DATA from './DATA';
+import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
+import Octicons from 'react-native-vector-icons/Octicons';
+
 // Recibe un objeto de navegación
 type ScreenProps = {
 	navigation: NavigationProp<any>;
 };
-const DATA = [
-	{
-		id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-		title: 'Respetar los horarios de sueño. Las personas adultas no necesitan pasar más de ocho horas en la cama. Acostarse y levantarse a la misma hora todos los días, es importante.',
-	},
-	{
-		id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-		title: 'Crear un entorno relajado: La habitación debe ser fresca, oscura y en silencio. La exposición a la luz puede hacer que resulte más difícil quedarse dormido.',
-	},
-	{
-		id: '58694a0f-3da1-471f-bd96-145571e29d72',
-		title: 'Limitar las siestas durante el día: Las siestas largas en el día pueden interferir en el sueño nocturno y por ello lo ideal es que no sean superiores a 30 minutos.',
-	},
-	{
-		id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba4',
-		title: 'Hacer ejercicio: La actividad física regular ayuda a dormir mejor. Sin embargo, es mejor evitar el exceso de ejercicio cerca a la hora de acostarse.',
-	},
-	{
-		id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f634',
-		title: 'Controlar las preocupaciones: Lo ideal es resolver las preocupaciones o inquietudes antes de ir a dormir. La meditación puede aliviar la ansiedad.',
-	},
-	{
-		id: '58694a0f-3da1-471f-bd96-145571e29d724',
-		title: 'Alimentación: Los especialistas recomiendan no irse a la cama con hambre ni sintiéndose muy lleno. Es importante evitar las comidas pesadas o muy abundantes un par de horas antes de acostarse.',
-	},
-	{
-		id: '18694a0f-3da1-471f-bd96-145571e29d72',
-		title: 'Esconder el reloj. Ver las horas pasar puede ser estresante. La recomendación de los expertos de la biblioteca médica Medlineplus es voltear el reloj de manera que se pueda ver desde la almohada, pues esto evitará situaciones de ansiedad y estrés.',
-	},
-	{
-		id: '2d7acbea-c1b1-46c2-aed5-3ad53abb28ba4',
-		title: 'Guardar los aparatos electrónicos. Apagar cualquier dispositivo que pueda recordar correos electrónicos que la persona necesita enviar o cosas que debe hacer.',
-	},
-	{
-		id: '32c68afc-c605-48d3-a4f8-fbd91aa97f634',
-		title: 'Limitar la cafeína. Puede ser útil para revitalizar por la mañana, pero puede generar efectos adversos si se consume en la tarde o antes de dormir.',
-	},
-	{
-		id: '54694a0f-3da1-471f-bd96-145571e29d724',
-		title: ' Limitar la cafeína. Puede ser útil para revitalizar por la mañana, pero puede generar efectos adversos si se consume en la tarde o antes de dormir.',
-	},
-];
+
+//inicialización 
+const MMKV = new MMKVLoader().initialize();
+
+function gurdarFav(indice: number, title: string, DATAFAV: any) {
+	let datoValido = true
+	//corroborar que el item no ha sido agregado anteriormente
+	for (let index = 0; index < DATAFAV.length; index++) {
+		const element = DATAFAV[index];
+		if (element.title == title) {
+			datoValido = false
+		}
+	}
+	//muestra alerta si hay elementos repetidos
+	if (datoValido == true) {
+		
+		Alert.alert('Favorito añadido a la lista')
+	} else {
+		Alert.alert('¡Excelente! este tip ya lo tienes en tu lista')
+	}
+	return datoValido
+}
 
 
-type ItemProps = { title: string };
-const Item = ({ title }: ItemProps) => (
-	<View style={styles.fixToText}>
-		<Text style={styles.textApp}>{title}</Text>
-		<TouchableOpacity style={styles.btnFav}>
-			<Text style={styles.fav} onPress={() => Alert.alert('Favorito añadido')}> &#128156;</Text>
-		</TouchableOpacity>
-	</View>
-);
 
 const Screen = ({ navigation }: ScreenProps) => {
 	const isCarousel = React.useRef(null)
+	//si no hay ningun favorito, muestra este  mesaje
+	const favVacio =
+		[{
+			id: 0,
+			title: 'Aun no tienes tips favoritos, añadelos'
+		}];
+
+	const [dataSaveFav, setdataSaveFav] = useMMKVStorage("gato123", MMKV, favVacio);
+	//console.log(dataSaveFav)
+	const changeFav = (item: any) => {
+		let res = gurdarFav(item.id, item.title, dataSaveFav)
+		if (dataSaveFav[0].id == 0)
+			dataSaveFav[0].id = -1
+		if (res == true) {
+			//si ya esta en el mmkv no lo agrega a la lista de favoritos
+			setdataSaveFav(dataSaveFav.concat(item))
+		}
+	}
+
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Tips</Text>
 			<View style={styles.main}>
 				<SafeAreaView style={styles.container}>
-					<Text style={styles.subtitle} >Favoritos</Text>
-					<Carousel
-						layoutCardOffset={5}
-						ref={isCarousel}
-						data={DATA}
-						renderItem={CarouselCardItem}
-						sliderWidth={SLIDER_WIDTH}
-						itemWidth={ITEM_WIDTH}
-						inactiveSlideShift={0}
-						useScrollView={true}
-					/>
-					<Text style={styles.subtitle} >Listado</Text>
-					<FlatList
-						data={DATA}
-						renderItem={({ item }) => <Item title={item.title} />}
-						keyExtractor={item => item.id}
+					<ScrollView >
+						<Text style={styles.title}>Tips</Text>
+						<View>
+							{(dataSaveFav[0].id == 0) ?
+								<View style={styles.fixToText}>
+									<Text style={styles.textApp}>{favVacio[0].title}</Text>
+									<TouchableOpacity style={{
+										borderTopRightRadius: 10,
+										borderBottomRightRadius: 10,
+										flex: 1,
+										justifyContent: "center",
+										alignItems: 'center'
+									}}>
+									</TouchableOpacity>
+								</View>
+								:
+								<Carousel autoplay loop showCounter style={{ marginTop: 20 }}>
+									{dataSaveFav.map((item1, index) => (
+										<View key={index}>
+											{(item1.id != -1)
+												?
+												<View style={styles.fixToText}>
+													<Text style={styles.textApp}>{item1.title}</Text>
+													<TouchableOpacity style={{
+														borderTopRightRadius: 10,
+														borderBottomRightRadius: 10,
+														flex: 1,
+														justifyContent: "center",
+														alignItems: 'center'
+													}}>
+														<Text text40 >&#128153;</Text>
+													</TouchableOpacity>
+												</View>
+												:
+												<Card
+													row
+													elevation={3}
+													style={{ width: '90%', height: '53%', backgroundColor: "#004B6F" }}>
+													<ImageBackground
+														source={require('../../assets/paisaje.png')}
+														imageStyle={{ borderRadius: 10 }}
+														style={{
+															flex: 1,
+															width: '100%',
+															height: '100%',
+															borderRadius: 10,
+															alignItems: 'center'
+														}}>
+														<Text text30 $textDefault style={{ fontWeight: 'bold' }}>
+															Mis favoritos
+														</Text>
+														<Text text80 $textDefault style={styles.cardd}>
+															Tu lista de tips para mejorar tu sueño.
+														</Text>
+														<View
+															style={{
+																height: '100%',
+																width: '20%',
+																alignSelf: 'flex-end',
+																backgroundColor: 'transparent',
+																borderTopRightRadius: 10,
+																borderBottomRightRadius: 10,
+															}}>
+														</View>
+													</ImageBackground>
+												</Card>
+											}
 
-					/>
+										</View>
+									))}
+								</Carousel>
+
+							}
+						</View>
+						
+						{(dataSaveFav.length == 1)
+							?
+							<View style={{top: "0%"}}>
+								<Text style={styles.subtitle} >Listado</Text>
+								{DATA.map((item2, index2) => (
+									<View key={index2} >
+										<View style={styles.fixToText}>
+											<Text style={styles.textApp}>{item2.title}</Text>
+											<TouchableOpacity style={{
+												borderTopRightRadius: 10,
+												borderBottomRightRadius: 10,
+												flex: 1,
+												justifyContent: "center",
+												alignItems: 'center'
+											}}>
+												<Text text40 onPress={() => changeFav(item2)}>&#128156;</Text>
+											</TouchableOpacity>
+										</View>
+									</View>
+								))}
+							</View>
+							:
+							<View style={{ top:"-44%" }}>
+								<Text style={styles.subtitle} >Listado</Text>
+								{DATA.map((item2, index2) => (
+									<View key={index2} >
+										<View style={styles.fixToText}>
+											<Text style={styles.textApp}>{item2.title}</Text>
+											<TouchableOpacity style={{
+												borderTopRightRadius: 10,
+												borderBottomRightRadius: 10,
+												flex: 1,
+												justifyContent: "center",
+												alignItems: 'center'
+											}}>
+												<Text text40 onPress={() => changeFav(item2)}>&#128156;</Text>
+											</TouchableOpacity>
+										</View>
+									</View>
+								))}
+							</View>
+						}
+					</ScrollView>
 				</SafeAreaView>
 			</View>
-		</View>
+		</View >
 	);
 };
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: 'center',
-		padding: 24,
+		paddingLeft: 20,
+		paddingRight: 1
 	},
 	main: {
 		flex: 1,
@@ -107,45 +200,43 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 64,
 		fontWeight: 'bold',
-		alignItems:"center",
-		justifyContent:"center"
+		alignItems: "center",
+		justifyContent: "center"
 	},
 	subtitle: {
 		fontSize: 44,
 		fontWeight: 'bold',
 	},
 	textApp: {
-		fontSize: 16,
 		fontWeight: 'bold',
 		width: "70%",
 		textAlign: "justify",
-		margin: 15
+		margin: 15,
+
 	},
 	fixToText: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		marginVertical: 8,
-		backgroundColor: "#1a63b2",  //'#1a63b2', //3382bc
-		width:"70%",
-		marginLeft:"10%"
+		backgroundColor: "#004B6F", 
+		width: "88%",
+		marginLeft: "0%",
+		borderRadius:10
+
 	},
 	btnFav: {
-		backgroundColor: "#1a63b2",
+		backgroundColor: "#004B6F",
 		alignItems: 'center',
 		justifyContent: 'center',
 		width: "30%",
+
 	},
 	fav: {
 		fontSize: 25,
-		marginRight: "40%",
+		marginRight: "50%",
 	},
-	loopCarousel: {
-		position: 'absolute',
-		bottom: 15,
-		left: 10
-	},
-	hor: {
-		height: 90
+	cardd: {
+		textAlign: "justify"
 	}
 });
 
