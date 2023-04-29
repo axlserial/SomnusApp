@@ -1,14 +1,12 @@
-import { Alert, Animated, FlatList, ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, Animated, ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import View from 'react-native-ui-lib/view';
 import Text from 'react-native-ui-lib/text';
 import { NavigationProp } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Card, Carousel } from 'react-native-ui-lib';
 import DATA from './DATA';
 import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
-import Octicons from 'react-native-vector-icons/Octicons';
-import { Easing } from 'react-native-reanimated';
+import React from 'react';
 
 // Recibe un objeto de navegación
 type ScreenProps = {
@@ -136,10 +134,8 @@ const Screen = ({ navigation }: ScreenProps) => {
 										</View>
 									))}
 								</Carousel>
-
 							}
 						</View>
-
 						{(dataSaveFav.length == 1)
 							?
 							<View style={{ top: "0%" }}>
