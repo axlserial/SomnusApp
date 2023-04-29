@@ -1,4 +1,4 @@
-import { Alert, FlatList, ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, Animated, FlatList, ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import View from 'react-native-ui-lib/view';
 import Text from 'react-native-ui-lib/text';
 import { NavigationProp } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { Card, Carousel } from 'react-native-ui-lib';
 import DATA from './DATA';
 import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
 import Octicons from 'react-native-vector-icons/Octicons';
+import { Easing } from 'react-native-reanimated';
 
 // Recibe un objeto de navegación
 type ScreenProps = {
@@ -28,7 +29,7 @@ function gurdarFav(indice: number, title: string, DATAFAV: any) {
 	}
 	//muestra alerta si hay elementos repetidos
 	if (datoValido == true) {
-		
+
 		Alert.alert('Favorito añadido a la lista')
 	} else {
 		Alert.alert('¡Excelente! este tip ya lo tienes en tu lista')
@@ -48,6 +49,7 @@ const Screen = ({ navigation }: ScreenProps) => {
 		}];
 
 	const [dataSaveFav, setdataSaveFav] = useMMKVStorage("gato123", MMKV, favVacio);
+	const [fadeIn, setFadeIn] = React.useState(new Animated.Value(0))
 	//console.log(dataSaveFav)
 	const changeFav = (item: any) => {
 		let res = gurdarFav(item.id, item.title, dataSaveFav)
@@ -58,7 +60,7 @@ const Screen = ({ navigation }: ScreenProps) => {
 			setdataSaveFav(dataSaveFav.concat(item))
 		}
 	}
-
+	
 	return (
 		<View style={styles.container}>
 			<View style={styles.main}>
@@ -137,10 +139,10 @@ const Screen = ({ navigation }: ScreenProps) => {
 
 							}
 						</View>
-						
+
 						{(dataSaveFav.length == 1)
 							?
-							<View style={{top: "0%"}}>
+							<View style={{ top: "0%" }}>
 								<Text style={styles.subtitle} >Listado</Text>
 								{DATA.map((item2, index2) => (
 									<View key={index2} >
@@ -160,7 +162,7 @@ const Screen = ({ navigation }: ScreenProps) => {
 								))}
 							</View>
 							:
-							<View style={{ top:"-44%" }}>
+							<View style={{ top: "-44%" }}>
 								<Text style={styles.subtitle} >Listado</Text>
 								{DATA.map((item2, index2) => (
 									<View key={index2} >
@@ -198,17 +200,17 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	title: {
-		fontSize: 64,
+		fontSize: 36,
 		fontWeight: 'bold',
 		alignItems: "center",
 		justifyContent: "center"
 	},
 	subtitle: {
-		fontSize: 44,
+		fontSize: 36,
 		fontWeight: 'bold',
 	},
 	textApp: {
-		fontWeight: 'bold',
+		fontWeight: 'normal',
 		width: "70%",
 		textAlign: "justify",
 		margin: 15,
@@ -218,10 +220,10 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		marginVertical: 8,
-		backgroundColor: "#004B6F", 
+		backgroundColor: "#0d2458",
 		width: "88%",
 		marginLeft: "0%",
-		borderRadius:10
+		borderRadius: 10
 
 	},
 	btnFav: {
