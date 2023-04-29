@@ -102,7 +102,7 @@ const Screen = ({ navigation }: ScreenProps) => {
 													elevation={3}
 													style={{ width: '90%', height: '53%', backgroundColor: "#004B6F" }}>
 													<ImageBackground
-														source={require('../../assets/paisaje.png')}
+														source={require('../../assets/images/paisaje.png')}
 														imageStyle={{ borderRadius: 10 }}
 														style={{
 															flex: 1,
