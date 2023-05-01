@@ -114,6 +114,7 @@ const Screen = ({ navigation }: ScreenProps) => {
 														</Text>
 														<Text text80 $textDefault style={styles.cardd}>
 															Tu lista de tips para mejorar tu sueño.
+
 														</Text>
 														<View
 															style={{
@@ -186,7 +187,7 @@ const Screen = ({ navigation }: ScreenProps) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingLeft: 10,
+		paddingLeft: 7,
 	},
 	main: {
 		flex: 1,
@@ -214,7 +215,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		marginVertical: 8,
 		backgroundColor: "#0d2458",
-		width: "95%",
+		width: "96%",
 		marginLeft: "0%",
 		borderRadius: 10
 
