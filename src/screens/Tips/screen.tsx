@@ -47,8 +47,6 @@ const Screen = ({ navigation }: ScreenProps) => {
 		}];
 
 	const [dataSaveFav, setdataSaveFav] = useMMKVStorage("gato123", MMKV, favVacio);
-	const [fadeIn, setFadeIn] = React.useState(new Animated.Value(0))
-	//console.log(dataSaveFav)
 	const changeFav = (item: any) => {
 		let res = gurdarFav(item.id, item.title, dataSaveFav)
 		if (dataSaveFav[0].id == 0)
@@ -100,9 +98,9 @@ const Screen = ({ navigation }: ScreenProps) => {
 												<Card
 													row
 													elevation={3}
-													style={{ width: '90%', height: '53%', backgroundColor: "#004B6F" }}>
+													style={{ width: '95%', height: '53%', backgroundColor: "#004B6F" }}>
 													<ImageBackground
-														source={require('../../assets/images/paisaje.png')}
+														source={require('../../assets/images/paisaje2.jpg')}
 														imageStyle={{ borderRadius: 10 }}
 														style={{
 															flex: 1,
@@ -171,7 +169,7 @@ const Screen = ({ navigation }: ScreenProps) => {
 												justifyContent: "center",
 												alignItems: 'center'
 											}}>
-												<Text text40 onPress={() => changeFav(item2)}>&#128156;</Text>
+												<Text  text40 onPress={() => changeFav(item2)}>&#128156;</Text>
 											</TouchableOpacity>
 										</View>
 									</View>
@@ -188,8 +186,7 @@ const Screen = ({ navigation }: ScreenProps) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingLeft: 20,
-		paddingRight: 1
+		paddingLeft: 10,
 	},
 	main: {
 		flex: 1,
@@ -217,7 +214,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		marginVertical: 8,
 		backgroundColor: "#0d2458",
-		width: "88%",
+		width: "95%",
 		marginLeft: "0%",
 		borderRadius: 10
 
@@ -235,7 +232,7 @@ const styles = StyleSheet.create({
 	},
 	cardd: {
 		textAlign: "justify"
-	}
+	},
 });
 
 export default Screen;
