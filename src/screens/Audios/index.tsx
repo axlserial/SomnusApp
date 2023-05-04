@@ -6,10 +6,12 @@ const AudioStack = createNativeStackNavigator();
 import MusicRelax from './musicRelax';
 import CuentosShort from './CuentosShort';
 import MusicNature from './MusicNature';
+import Reproductor from './reproductor';
 
 const AudioScreen = () => {
 	return (
-		<AudioStack.Navigator initialRouteName="Audios"
+		<AudioStack.Navigator
+			initialRouteName="Audios"
 			screenOptions={{animation: 'slide_from_right'}}>
 			<AudioStack.Screen
 				name="Audios"
@@ -43,6 +45,17 @@ const AudioScreen = () => {
 				component={CuentosShort}
 				options={{
 					title: 'Music Relax',
+					headerTintColor: Colors.white,
+					headerStyle: {
+						backgroundColor: Colors.background,
+					},
+				}}
+			/>
+			<AudioStack.Screen
+				name="Reproductor"
+				component={Reproductor}
+				options={{
+					title: 'Reproductor',
 					headerTintColor: Colors.white,
 					headerStyle: {
 						backgroundColor: Colors.background,

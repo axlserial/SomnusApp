@@ -24,7 +24,7 @@ const MusicNature = ({navigation}: MusicProps) => {
 				<CardOpcion
 					key={i}
 					navigation={navigation}
-					to=''
+					to="Reproductor"
 					titulo={canci.titulo}
 					desc={canci.desc}
 					url={canci.url}

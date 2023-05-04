@@ -17,7 +17,7 @@ const CardOpcion = ({navigation, to, titulo, desc, url, imagen}: CardOpcionProps
 	return (
 		<Card
 			row
-			onPress={() => navigation.navigate(to)}
+			onPress={() => navigation.navigate(to, {title: titulo, desc: desc, url: url, image: imagen})}
 			elevation={3}
 			style={{width: '100%', height: '15%'}}>
 			<View

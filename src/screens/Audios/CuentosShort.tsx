@@ -25,7 +25,7 @@ const CuentosShort = ({navigation}: CuentosProps) => {
 				<CardOpcion
 					key={i}
 					navigation={navigation}
-					to=''
+					to="Reproductor"
 					titulo={elemento.titulo}
 					desc={elemento.desc}
 					url={elemento.url}
