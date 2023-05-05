@@ -1,6 +1,8 @@
-import {NavigationProp} from '@react-navigation/native';
-import {View, Text, LoaderScreen} from 'react-native-ui-lib';
+import { NavigationProp } from '@react-navigation/native';
+import { View, Text, LoaderScreen } from 'react-native-ui-lib';
 import CardOpcion from './CardOption';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Pressable } from 'react-native';
 
 // Recibe un objeto de navegación
 type MusicProps = {
@@ -70,23 +72,27 @@ const cancionesRelax = [
 	},
 ];
 
-const MusicRelax = ({navigation}: MusicProps) => {
+const MusicRelax = ({ navigation }: MusicProps) => {
 	return (
-		<View style={{flex: 1, alignItems: 'center', padding: 15, gap: 10}}>
-			<View style={{alignSelf: 'flex-start', marginBottom: 10}}>
-				<Text text60>Selecciona un Audio</Text>
-			</View>
-			{cancionesRelax.map((music, i) => (
-				<CardOpcion
-					key={i}
-					navigation={navigation}
-					to="Reproductor"
-					titulo={music.titulo}
-					desc={music.desc}
-					url={music.url}
-					imagen={music.imagen}
-				/>
-			))}
+		<View style={{ height: "100%" }}>
+			<ScrollView>
+				<View style={{ alignSelf: 'flex-start', marginBottom: 10, alignItems: 'center', padding: 15}}>
+					<Text text60>Selecciona un Audio</Text>
+				</View>
+				<View style={{ alignItems: 'center', gap: 20,top:"-1%"}}>
+					{cancionesRelax.map((music, i) => (
+						<CardOpcion
+							key={i}
+							navigation={navigation}
+							to="Reproductor"
+							titulo={music.titulo}
+							desc={music.desc}
+							url={music.url}
+							imagen={music.imagen}
+						/>
+					))}
+				</View>
+			</ScrollView>
 		</View>
 	);
 };
