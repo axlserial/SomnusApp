@@ -1,8 +1,9 @@
-import { NavigationProp } from '@react-navigation/native';
-import { View, Text, LoaderScreen } from 'react-native-ui-lib';
+import {NavigationProp} from '@react-navigation/native';
+import {View, Text} from 'react-native-ui-lib';
 import CardOpcion from './CardOption';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Pressable } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import TrackPlayer from 'react-native-track-player';
+import { useEffect, useState } from 'react';
 
 // Recibe un objeto de navegación
 type MusicProps = {
@@ -11,84 +12,128 @@ type MusicProps = {
 
 const cancionesRelax = [
 	{
-		titulo: 'Space Jazz',
-		desc: 'Como estar en un videojuego tranquilamente',
+		id: 0,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Space%20Jazz.mp3',
-		imagen: require('../../assets/images/space.png'),
+		title: 'Space Jazz',
+		artist: 'Como estar en un videojuego tranquilamente',
+		artwork: require('../../assets/images/space.png'),
 	},
 	{
-		titulo: 'Devonshire Waltz Andante',
-		desc: 'Como estar en un baile sin fin',
+		id: 1,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Devonshire%20Waltz%20Andante.mp3',
-		imagen: require('../../assets/images/dance.jpg'),
+		title: 'Devonshire Waltz Andante',
+		artist: 'Como estar en un baile sin fin',
+		artwork: require('../../assets/images/dance.jpg'),
 	},
 	{
-		titulo: 'Late Night Radio',
-		desc: 'Como una noche con amigos',
+		id: 2,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Late%20Night%20Radio.mp3',
-		imagen: require('../../assets/images/friends.jpg'),
+		title: 'Late Night Radio',
+		artist: 'Como una noche con amigos',
+		artwork: require('../../assets/images/friends.jpg'),
 	},
 	{
-		titulo: 'Night in Venice',
-		desc: 'Relajate como en una gran noche',
+		id: 3,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Night%20in%20Venice.mp3',
-		imagen: require('../../assets/images/night.jpg'),
+		title: 'Night in Venice',
+		artist: 'Relajate como en una gran noche',
+		artwork: require('../../assets/images/night.jpg'),
 	},
 	{
-		titulo: 'Canon in D for Two Harps',
-		desc: 'Disfruta tus momentos',
+		id: 4,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Canon%20in%20D%20for%20Two%20Harps.mp3',
-		imagen: require('../../assets/images/momentos.jpg'),
+		title: 'Canon in D for Two Harps',
+		artist: 'Disfruta tus momentos',
+		artwork: require('../../assets/images/momentos.jpg'),
 	},
 	{
-		titulo: 'A Very Brady Special',
-		desc: 'Recordando los bellos momentos',
+		id: 5,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/A%20Very%20Brady%20Special.mp3',
-		imagen: require('../../assets/images/recuerdos.jpg'),
+		title: 'A Very Brady Special',
+		artist: 'Recordando los bellos momentos',
+		artwork: require('../../assets/images/recuerdos.jpg'),
 	},
 	{
-		titulo: 'Stay the Course',
-		desc: 'Manteniendo el enfoque',
+		id: 6,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Stay%20the%20Course.mp3',
-		imagen: require('../../assets/images/focus.jpg'),
+		title: 'Stay the Course',
+		artist: 'Manteniendo el enfoque',
+		artwork: require('../../assets/images/focus.jpg'),
 	},
 	{
-		titulo: 'Sincerely',
-		desc: 'Hable con esperanza sobre el futuro.',
+		id: 7,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sincerely.mp3',
-		imagen: require('../../assets/images/futuro.jpg'),
+		title: 'Sincerely',
+		artist: 'Hable con esperanza sobre el futuro.',
+		artwork: require('../../assets/images/futuro.jpg'),
 	},
 	{
-		titulo: 'Past Sadness',
-		desc: 'Sentir tristeza puede dar paz',
+		id: 8,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Past%20Sadness.mp3',
-		imagen: require('../../assets/images/tristeza.jpg'),
+		title: 'Past Sadness',
+		artist: 'Sentir tristeza puede dar paz',
+		artwork: require('../../assets/images/tristeza.jpg'),
 	},
 	{
-		titulo: 'Smooth Lovin',
-		desc: 'Se siente tan suave como el amor',
+		id: 9,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Smooth%20Lovin.mp3',
-		imagen: require('../../assets/images/love.jpg'),
+		title: 'Smooth Lovin',
+		artist: 'Se siente tan suave como el amor',
+		artwork: require('../../assets/images/love.jpg'),
 	},
 ];
 
-const MusicRelax = ({ navigation }: MusicProps) => {
+const MusicRelax = ({navigation}: MusicProps) => {
+	const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
+	useEffect(() => {
+		const startPlayer = async () => {
+			try {
+				setIsTrackPlayerInit(true);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		startPlayer();
+	}, []);
+	
+	useEffect(() => {
+		const addTracks = async () => {
+			try {
+				await TrackPlayer.reset(); // Limpia la cola de reproducción antes de agregar nuevas canciones
+				await TrackPlayer.add(cancionesRelax); // Añade todas las canciones a la cola de reproducción
+				const tracks = await TrackPlayer.getQueue();
+			} catch (error) {
+				console.log('Error al agregar las canciones a la cola:', error);
+			}
+		};
+		if (isTrackPlayerInit) {
+			addTracks();
+		}
+	}, [isTrackPlayerInit]);
+	
 	return (
-		<View style={{ height: "100%" }}>
+		<View style={{height: '100%'}}>
 			<ScrollView>
-				<View style={{ alignSelf: 'flex-start', marginBottom: 10, alignItems: 'center', padding: 15}}>
+				<View
+					style={{
+						alignSelf: 'flex-start',
+						marginBottom: 10,
+						alignItems: 'center',
+						padding: 15,
+					}}>
 					<Text text60>Selecciona un Audio</Text>
 				</View>
-				<View style={{ alignItems: 'center', gap: 20,top:"-1%"}}>
+				<View style={{alignItems: 'center', gap: 20, top: '-1%'}}>
 					{cancionesRelax.map((music, i) => (
 						<CardOpcion
 							key={i}
 							navigation={navigation}
 							to="Reproductor"
-							titulo={music.titulo}
-							desc={music.desc}
+							id={music.id}
 							url={music.url}
-							imagen={music.imagen}
+							title={music.title}
+							artist={music.artist}
+							artwork={music.artwork}
 						/>
 					))}
 				</View>

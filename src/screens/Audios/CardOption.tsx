@@ -1,42 +1,57 @@
-import { Card, View, Text } from 'react-native-ui-lib';
-import { NavigationProp } from '@react-navigation/native';
+import {Card, View, Text} from 'react-native-ui-lib';
+import {NavigationProp} from '@react-navigation/native';
 import Octicons from 'react-native-vector-icons/Octicons';
-import { ImageBackground } from 'react-native';
-
+import {ImageBackground} from 'react-native';
 
 type CardOpcionProps = {
 	navigation: NavigationProp<any>;
 	to: string;
-	titulo: string;
-	desc: string;
+	id: number;
 	url: string;
-	imagen: any;
+	title: string;
+	artist: string;
+	artwork: any;
 };
 
-const CardOpcion = ({ navigation, to, titulo, desc, url, imagen }: CardOpcionProps) => {
+const CardOpcion = ({
+	navigation,
+	to,
+	id,
+	url,
+	title,
+	artist,
+	artwork,
+}: CardOpcionProps) => {
 	return (
-		<View style={{flex:1,padding:20}}>
+		<View style={{flex: 1, padding: 20}}>
 			<Card
 				row
-				onPress={() => navigation.navigate(to, { title: titulo, desc: desc, url: url, image: imagen })}
+				onPress={() =>
+					navigation.navigate(to, {
+						id: id,
+						url: url,
+						title: title,
+						artist: artist,
+						artwork: artwork,
+					})
+				}
 				elevation={3}
-				style={{height: '200%'}}
-				>
+				style={{height: '200%'}}>
 				<View
 					style={{
 						width: '80%',
-						height:"100%",
+						height: '100%',
 						justifyContent: 'center',
 						paddingLeft: 20,
 						backgroundColor: '#1A3D82',
 						borderTopLeftRadius: 10,
 						borderBottomLeftRadius: 10,
 					}}>
-					<Text text70 $textDefault style={{ fontWeight: 'bold' }}>
-						{titulo}
+					<Text text70 $textDefault style={{fontWeight: 'bold'}}>
+						{title}
 					</Text>
 					<Text text80 $textDefault>
-						{desc}
+						{artist}
 					</Text>
 				</View>
 				<View
@@ -50,14 +65,13 @@ const CardOpcion = ({ navigation, to, titulo, desc, url, imagen }: CardOpcionPro
 						borderBottomRightRadius: 10,
 					}}>
 					<ImageBackground
-						source={imagen} // establecer la imagen de fondo aquí
+						source={artwork} // establecer la imagen de fondo aquí
 						style={{
 							flex: 1,
 							width: '100%',
 							height: '100%',
 							//resizeMode: 'cover', // ajustar la imagen al tamaño del contenedor
-						}}>
-					</ImageBackground>
+						}}></ImageBackground>
 				</View>
 			</Card>
 		</View>
