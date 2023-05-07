@@ -7,8 +7,8 @@ import {ScrollView} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {View, Text, LoaderScreen} from 'react-native-ui-lib';
 
-import CardHora from './CardHora';
-import {horas_dormir} from '../../utils/horas_suenio';
+import CardDormir from './CardDormir';
+import {horas_dormir} from '../../utils';
 
 // Recibe un objeto de navegación
 type ResultadosProps = {
@@ -73,6 +73,7 @@ const ResultadosDormir = ({navigation}: ResultadosProps) => {
 						alignItems: 'center',
 						marginTop: 10,
 						marginBottom: 20,
+						gap: 30,
 					}}>
 					<Text text70 style={{color: '#A6A6A6', fontWeight: 'bold'}}>
 						Tú hora seleccionada es{' '}
@@ -82,28 +83,56 @@ const ResultadosDormir = ({navigation}: ResultadosProps) => {
 							hour12: true,
 						})}
 					</Text>
+
+					<View
+						style={{
+							backgroundColor: '#C9E6FF',
+							borderRadius: 10,
+							padding: 20,
+							marginLeft: 10,
+							marginRight: 10
+						}}>
+						<Text
+							text80
+							style={{color: '#001F2A', fontWeight: 'bold'}}>
+							Haz click en el icono de la campana para configurar
+							una alerta de hora de dormir
+						</Text>
+					</View>
 				</View>
 				<View style={{padding: 10, marginBottom: 18}}>
 					<Text text60 style={{fontWeight: 'bold'}}>
 						Para un buen descanso:
 					</Text>
 					<View style={{marginTop: 10, gap: 15}}>
-						<CardHora hora={horas[0]} ciclos={6} total={'9h'} />
-						<CardHora hora={horas[1]} ciclos={5} total={'7h 30m'} />
+						<CardDormir hora={horas[0]} ciclos={6} total={'9h'} />
+						<CardDormir
+							hora={horas[1]}
+							ciclos={5}
+							total={'7h 30m'}
+						/>
 					</View>
 					<Text text60 style={{marginTop: 20, fontWeight: 'bold'}}>
 						Para un descanso regular:
 					</Text>
 					<View style={{marginTop: 10, gap: 15}}>
-						<CardHora hora={horas[2]} ciclos={4} total={'6h'} />
+						<CardDormir hora={horas[2]} ciclos={4} total={'6h'} />
 					</View>
 					<Text text60 style={{marginTop: 20, fontWeight: 'bold'}}>
 						Para un descanso mínimo:
 					</Text>
 					<View style={{marginTop: 10, gap: 15}}>
-						<CardHora hora={horas[3]} ciclos={3} total={'4h 30m'} />
-						<CardHora hora={horas[4]} ciclos={2} total={'3h'} />
-						<CardHora hora={horas[5]} ciclos={1} total={'1h 30m'} />
+						<CardDormir
+							hora={horas[3]}
+							ciclos={3}
+							total={'4h 30m'}
+						/>
+						<CardDormir hora={horas[4]} ciclos={2} total={'3h'} />
+						<CardDormir
+							hora={horas[5]}
+							ciclos={1}
+							total={'1h 30m'}
+						/>
 					</View>
 				</View>
 			</ScrollView>

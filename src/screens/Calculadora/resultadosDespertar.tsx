@@ -3,12 +3,18 @@ import {
 	DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import {useState, useEffect} from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, ToastAndroid, Alert} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
-import {View, Text, LoaderScreen} from 'react-native-ui-lib';
+import {View, Text, LoaderScreen, Button} from 'react-native-ui-lib';
+import Icon from 'react-native-vector-icons/Octicons';
 
+import {NotificationsId} from '../../constants';
 import CardHora from './CardHora';
-import {horas_despertar} from '../../utils/horas_suenio';
+import {
+	horas_despertar,
+	requestNotificationPermission,
+	scheduleNotification,
+} from '../../utils';
 
 // Recibe un objeto de navegación
 type ResultadosProps = {
@@ -47,11 +53,65 @@ const ResultadosDespertar = ({navigation}: ResultadosProps) => {
 		selectedDate && setDate(selectedDate);
 	};
 
+	// Función que se ejecuta cuando se presiona el botón de recordatorio
+	// para establecer un recordatorio de ir a dormir
+	const onReminderPress = async () => {
+		const granted = await requestNotificationPermission(NotificationsId);
+
+		if (!granted) {
+			ToastAndroid.show(
+				'No se puede establecer un recordatorio sin permisos',
+				ToastAndroid.SHORT,
+			);
+			return;
+		}
+
+		// Mensaje del toast
+		let message = 'Recordatorio establecido ';
+
+		// Para establecer el recordatorio se debe establecer la fecha
+		let fecha: Date = new Date(date.getTime());
+
+		// Si la hora es menor a la actual se establece para el día siguiente
+		if (
+			date.getHours() < new Date(Date.now()).getHours() ||
+			(date.getHours() === new Date(Date.now()).getHours() &&
+				date.getMinutes() <= new Date(Date.now()).getMinutes())
+		) {
+			fecha = new Date(Date.now());
+			fecha.setDate(fecha.getDate() + 1);
+			message += 'para mañana a las';
+		} else {
+			message += 'para hoy a las';
+		}
+
+		// Se establece la hora
+		fecha.setHours(date.getHours());
+		fecha.setMinutes(date.getMinutes());
+		fecha.setSeconds(0);
+
+		await scheduleNotification({
+			title: 'Hora de ir a dormir',
+			body: 'Recuerda que debes dormir para despertar a la hora indicada',
+			channelId: NotificationsId,
+			timestamp: fecha,
+		});
+
+		ToastAndroid.show(
+			`${message} ${date.toLocaleTimeString('es-MX', {
+				hour: '2-digit',
+				minute: '2-digit',
+				hour12: true,
+			})}`,
+			ToastAndroid.SHORT,
+		);
+	};
+
 	useEffect(() => {
 		// Se abre el selector de fecha
 		const unsubscribe = navigation.addListener('focus', () => {
 			DateTimePickerAndroid.open({
-				value: date,
+				value: new Date(Date.now()),
 				onChange,
 				mode: 'time',
 			});
@@ -73,10 +133,9 @@ const ResultadosDespertar = ({navigation}: ResultadosProps) => {
 						alignItems: 'center',
 						marginTop: 10,
 						marginBottom: 20,
+						gap: 30,
 					}}>
-					<Text
-						text70
-						style={{color: '#A6A6A6', fontWeight: 'bold'}}>
+					<Text text70 style={{color: '#A6A6A6', fontWeight: 'bold'}}>
 						Tú hora seleccionada es{' '}
 						{date.toLocaleTimeString('es-MX', {
 							hour: '2-digit',
@@ -84,6 +143,31 @@ const ResultadosDespertar = ({navigation}: ResultadosProps) => {
 							hour12: true,
 						})}
 					</Text>
+					<Icon.Button
+						name="bell"
+						color={'white'}
+						backgroundColor={'#3E84C5'}
+						style={{padding: 10}}
+						onPress={() =>
+							Alert.alert(
+								'¿Estás seguro?',
+								'Se establecerá un recordatorio para ir a dormir a la hora indicada',
+								[
+									{
+										text: 'Cancelar',
+										style: 'cancel',
+									},
+									{
+										text: 'Aceptar',
+										onPress: onReminderPress,
+									},
+								],
+							)
+						}>
+						<Text style={{color: 'white'}}>
+							Establecer recordatorio de ir a dormir
+						</Text>
+					</Icon.Button>
 				</View>
 				<View style={{padding: 10, marginBottom: 18}}>
 					<Text text60 style={{fontWeight: 'bold'}}>

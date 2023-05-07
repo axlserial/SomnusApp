@@ -1,4 +1,4 @@
-import {Card, View, Text} from 'react-native-ui-lib';
+import {Card, View, Text, Colors} from 'react-native-ui-lib';
 import Octicons from 'react-native-vector-icons/Octicons';
 
 type CardHoraProps = {
@@ -13,14 +13,14 @@ const CardHora = ({hora, ciclos, total}: CardHoraProps) => {
 			<View
 				row
 				style={{
-					width: '75%',
-					justifyContent: 'space-between',
-					paddingLeft: 20,
-					paddingRight: 15,
-					backgroundColor: '#004B6F',
-					borderTopLeftRadius: 10,
-					borderBottomLeftRadius: 10,
+					width: '100%',
+					justifyContent: 'center',
 					alignItems: 'center',
+					paddingLeft: 20,
+					paddingRight: 25,
+					backgroundColor: '#004B6F',
+					borderRadius: 10,
+					gap: 15,
 				}}>
 				<View
 					style={{
@@ -35,25 +35,18 @@ const CardHora = ({hora, ciclos, total}: CardHoraProps) => {
 						{total}
 					</Text>
 				</View>
-				<Text text50 style={{fontWeight: 'bold'}}>
-					{hora}
-				</Text>
-			</View>
-			<View
-				style={{
-					height: '100%',
-					width: '25%',
-					justifyContent: 'center',
-					alignItems: 'center',
-					backgroundColor: '#004B6F',
-					borderTopRightRadius: 10,
-					borderBottomRightRadius: 10,
-				}}>
-				<Octicons
-					name="clock"
-					color="white"
-					size={20}
-				/>
+				<View
+					style={{
+						backgroundColor: '#004B6F',
+						alignItems: 'center',
+						flexDirection: 'row',
+						gap: 15,
+					}}>
+					<Octicons name="clock" color={Colors.textColor} size={20} />
+					<Text text50 style={{fontWeight: 'bold'}}>
+						{hora}
+					</Text>
+				</View>
 			</View>
 		</Card>
 	);
