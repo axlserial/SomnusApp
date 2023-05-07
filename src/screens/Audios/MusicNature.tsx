@@ -13,14 +13,14 @@ type MusicProps = {
 const cancionesNature = [
 	{
 		id: 0,
-		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Space%20Jazz.mp3',
-		title: 'Lluvia',
-		artist: 'Como estar en un videojuego tranquilamente',
-		artwork: require('../../assets/images/space.png'),
+		url: 'https://musicarelajante.me/wp-content/uploads/2016/11/Pajaros-Cantores-en-un-amanecer.mp3',
+		title: 'Canto de aves',
+		artist: 'Un canto muy reconfortante',
+		artwork: require('../../assets/images/aves.jpg'),
 	},
 	{
 		id: 1,
-		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Devonshire%20Waltz%20Andante.mp3',
+		url: 'http://radioteca.net/media/uploads/old_radioteca/audios/05100003.mp3',
 		title: 'Devonshire Waltz Andante',
 		artist: 'Como estar en un baile sin fin',
 		artwork: require('../../assets/images/dance.jpg'),

@@ -15,7 +15,6 @@ const Reproductor: React.FC<Props> = ({route}) => {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [currentTrack, setCurrentTrack] = useState(route.params);
 	const progress = useProgress();
-	const [cancionActualIndex, setCancionActualIndex] = useState(route.params?.id);
 
 	useEffect(() => {
 		const startPlayer = async () => {
@@ -61,15 +60,31 @@ const Reproductor: React.FC<Props> = ({route}) => {
 			await TrackPlayer.play();
 			setIsPlaying(true);
 		}
-		setCurrentTrack(route.params);
 	};
 	const skipToPrevius = async () => {
-		await TrackPlayer.skipToPrevious();
-		setCurrentTrack(route.params);
+		const currentIndex = Number(await TrackPlayer.getCurrentTrack()); // Obtener el índice actual de la pista
+		const previusIndex = currentIndex - 1;
+
+		if (previusIndex >= 0) {
+			const previus = await TrackPlayer.getTrack(previusIndex); // Obtener los datos de la pista anterior
+			if (previus) {
+				await TrackPlayer.skip(previus.id); // Pasar el id de la pista anterior a skip()
+				setCurrentTrack(previus);
+				await TrackPlayer.play();
+			}
+		}
 	};
+
 	const skipToNext = async () => {
-		await TrackPlayer.skipToNext();
-		setCurrentTrack(route.params);
+		const currentIndex = Number(await TrackPlayer.getCurrentTrack()); // Obtener el índice actual de la pista
+		const nextIndex = currentIndex + 1;
+
+		const next = await TrackPlayer.getTrack(nextIndex); // Obtener los datos de la siguiente pista
+		if (next) {
+			await TrackPlayer.skip(next.id); // Pasar el id de la siguiente pista a skip()
+			setCurrentTrack(next);
+			await TrackPlayer.play();
+		}
 	};
 
 	const formatTime = (seconds: number): string => {
