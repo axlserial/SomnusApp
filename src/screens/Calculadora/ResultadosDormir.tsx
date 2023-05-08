@@ -6,9 +6,11 @@ import {useState, useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {View, Text, LoaderScreen} from 'react-native-ui-lib';
+import {useMMKVStorage} from 'react-native-mmkv-storage';
 
+import MMKV from '../../notificationStorage';
 import CardDormir from './CardDormir';
-import {horas_dormir} from '../../utils';
+import {horas_dormir, Notification} from '../../utils';
 
 // Recibe un objeto de navegación
 type ResultadosProps = {
@@ -22,6 +24,13 @@ const ResultadosDormir = ({navigation}: ResultadosProps) => {
 	const [date, setDate] = useState(new Date());
 	const [selecting, setSelecting] = useState(true);
 	const [horas, setHoras] = useState<string[]>([]);
+
+	// Para almacenar los recordatorios
+	const [_, setNotifications] = useMMKVStorage<Notification[]>(
+		'notifications',
+		MMKV,
+		[],
+	);
 
 	// Función que se ejecuta cuando se selecciona una fecha
 	const onChange = (
@@ -90,7 +99,7 @@ const ResultadosDormir = ({navigation}: ResultadosProps) => {
 							borderRadius: 10,
 							padding: 20,
 							marginLeft: 10,
-							marginRight: 10
+							marginRight: 10,
 						}}>
 						<Text
 							text80
@@ -105,18 +114,29 @@ const ResultadosDormir = ({navigation}: ResultadosProps) => {
 						Para un buen descanso:
 					</Text>
 					<View style={{marginTop: 10, gap: 15}}>
-						<CardDormir hora={horas[0]} ciclos={6} total={'9h'} />
+						<CardDormir
+							hora={horas[0]}
+							ciclos={6}
+							total={'9h'}
+							setNotifications={setNotifications}
+						/>
 						<CardDormir
 							hora={horas[1]}
 							ciclos={5}
 							total={'7h 30m'}
+							setNotifications={setNotifications}
 						/>
 					</View>
 					<Text text60 style={{marginTop: 20, fontWeight: 'bold'}}>
 						Para un descanso regular:
 					</Text>
 					<View style={{marginTop: 10, gap: 15}}>
-						<CardDormir hora={horas[2]} ciclos={4} total={'6h'} />
+						<CardDormir
+							hora={horas[2]}
+							ciclos={4}
+							total={'6h'}
+							setNotifications={setNotifications}
+						/>
 					</View>
 					<Text text60 style={{marginTop: 20, fontWeight: 'bold'}}>
 						Para un descanso mínimo:
@@ -126,12 +146,19 @@ const ResultadosDormir = ({navigation}: ResultadosProps) => {
 							hora={horas[3]}
 							ciclos={3}
 							total={'4h 30m'}
+							setNotifications={setNotifications}
 						/>
-						<CardDormir hora={horas[4]} ciclos={2} total={'3h'} />
+						<CardDormir
+							hora={horas[4]}
+							ciclos={2}
+							total={'3h'}
+							setNotifications={setNotifications}
+						/>
 						<CardDormir
 							hora={horas[5]}
 							ciclos={1}
 							total={'1h 30m'}
+							setNotifications={setNotifications}
 						/>
 					</View>
 				</View>

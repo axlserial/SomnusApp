@@ -5,15 +5,18 @@ import {
 import {useState, useEffect} from 'react';
 import {ScrollView, ToastAndroid, Alert} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
-import {View, Text, LoaderScreen, Button} from 'react-native-ui-lib';
+import {View, Text, LoaderScreen} from 'react-native-ui-lib';
 import Icon from 'react-native-vector-icons/Octicons';
+import {useMMKVStorage} from 'react-native-mmkv-storage';
 
 import {NotificationsId} from '../../constants';
+import MMKV from '../../notificationStorage';
 import CardHora from './CardHora';
 import {
 	horas_despertar,
 	requestNotificationPermission,
 	scheduleNotification,
+	Notification,
 } from '../../utils';
 
 // Recibe un objeto de navegación
@@ -28,6 +31,13 @@ const ResultadosDespertar = ({navigation}: ResultadosProps) => {
 	const [date, setDate] = useState(new Date());
 	const [selecting, setSelecting] = useState(true);
 	const [horas, setHoras] = useState<string[]>([]);
+
+	// Para almacenar los recordatorios
+	const [_, setNotifications] = useMMKVStorage<Notification[]>(
+		'notifications',
+		MMKV,
+		[],
+	);
 
 	// Función que se ejecuta cuando se selecciona una fecha
 	const onChange = (
@@ -90,13 +100,23 @@ const ResultadosDespertar = ({navigation}: ResultadosProps) => {
 		fecha.setMinutes(date.getMinutes());
 		fecha.setSeconds(0);
 
-		await scheduleNotification({
+		const id = await scheduleNotification({
 			title: 'Hora de ir a dormir',
 			body: 'Recuerda que debes dormir para despertar a la hora indicada',
 			channelId: NotificationsId,
 			timestamp: fecha,
 		});
 
+		// Se agrega el recordatorio a la lista
+		setNotifications(notifications => [
+			...notifications,
+			{
+				id,
+				timestamp: fecha.getTime(),
+			},
+		]);
+
+		// Se muestra el toast de confirmación
 		ToastAndroid.show(
 			`${message} ${date.toLocaleTimeString('es-MX', {
 				hour: '2-digit',

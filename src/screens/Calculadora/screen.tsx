@@ -1,6 +1,7 @@
 import {ScrollView} from 'react-native';
-import {View, Text} from 'react-native-ui-lib';
+import {View, Text, Colors} from 'react-native-ui-lib';
 import {NavigationProp} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Octicons';
 
 import CardOpcion from './CardOpcion';
 import FasesCarousel from './FasesCarousel';
@@ -13,8 +14,25 @@ type ScreenProps = {
 const Screen = ({navigation}: ScreenProps) => {
 	return (
 		<View style={{flex: 1, alignItems: 'center', padding: 15, gap: 10}}>
-			<View style={{alignSelf: 'flex-start', marginBottom: 10}}>
+			<View
+				style={{
+					width: '100%',
+					alignSelf: 'flex-start',
+					marginBottom: 10,
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					alignItems: 'center',
+				}}>
 				<Text text60>Selecciona una opción</Text>
+				<Icon.Button
+					name="bell"
+					backgroundColor={Colors.background}
+					color={Colors.primary}
+					size={20}
+					style={{padding: 5}}
+					iconStyle={{marginRight: 5, marginLeft: 3}}
+					onPress={() => navigation.navigate('Recordatorios')}
+				/>
 			</View>
 			<CardOpcion
 				navigation={navigation}

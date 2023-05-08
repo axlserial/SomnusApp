@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import ResultadosDespertar from './resultadosDespertar';
 import ResultadosDormir from './ResultadosDormir';
+import Recordatorios from './Recordatorios';
 
 const CalculadoraStack = createNativeStackNavigator();
 
@@ -33,6 +34,17 @@ const CalculadoraScreen = () => {
 				component={ResultadosDormir}
 				options={{
 					title: '¿A que hora debo dormir?',
+					headerTintColor: Colors.white,
+					headerStyle: {
+						backgroundColor: Colors.background,
+					},
+				}}
+			/>
+			<CalculadoraStack.Screen
+				name="Recordatorios"
+				component={Recordatorios}
+				options={{
+					title: 'Recordatorios de ir a dormir',
 					headerTintColor: Colors.white,
 					headerStyle: {
 						backgroundColor: Colors.background,

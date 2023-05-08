@@ -1,5 +1,6 @@
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
+import notifee, {EventType} from '@notifee/react-native';
 import SplashScreen from 'react-native-splash-screen';
 import {ToastAndroid, StatusBar} from 'react-native';
 import {Colors} from 'react-native-ui-lib';
@@ -10,6 +11,22 @@ import TrackPlayer, {
 	AppKilledPlaybackBehavior,
 } from 'react-native-track-player';
 
+// Handler para las notificaciones
+notifee.onBackgroundEvent(async ({type, detail}) => {
+	const {notification} = detail;
+
+	// Si se presiona la notificación
+	if (type === EventType.PRESS || type === EventType.DISMISSED) {
+		const id = notification?.id;
+
+		// Si la notificación tiene un id
+		if (id) {
+			await notifee.cancelNotification(id);
+		}
+	}
+});
+
+// Aplicación principal
 const App = () => {
 	// Indica si es la primera vez que se inicia la aplicación
 	const [firstTime, setFirstTime] = useState(true);
@@ -53,7 +70,7 @@ const App = () => {
 	return (
 		<>
 			<StatusBar backgroundColor={Colors.background} />
-			<GestureHandlerRootView style={{ flex: 1 }}>
+			<GestureHandlerRootView style={{flex: 1}}>
 				<NavigationContainer>
 					<Main />
 				</NavigationContainer>

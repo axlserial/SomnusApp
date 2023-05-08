@@ -3,15 +3,27 @@ import {ToastAndroid, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 
 import {NotificationsId} from '../../constants';
-import {requestNotificationPermission, scheduleNotification} from '../../utils';
+import {
+	requestNotificationPermission,
+	scheduleNotification,
+	Notification,
+} from '../../utils';
 
 type CardDormirProps = {
 	hora: string;
 	ciclos: number;
 	total: string;
+	setNotifications: (
+		value: Notification[] | ((prevValue: Notification[]) => Notification[]),
+	) => void;
 };
 
-const CardDormir = ({hora, ciclos, total}: CardDormirProps) => {
+const CardDormir = ({
+	hora,
+	ciclos,
+	total,
+	setNotifications,
+}: CardDormirProps) => {
 	// Fución que regresa la hora en formato Date
 	const getTime = () => {
 		const data = hora.split(' ');
@@ -61,13 +73,23 @@ const CardDormir = ({hora, ciclos, total}: CardDormirProps) => {
 			message += 'para hoy a las';
 		}
 
-		await scheduleNotification({
+		const id = await scheduleNotification({
 			title: 'Hora de ir a dormir',
 			body: 'Recuerda que debes dormir para despertar a la hora indicada',
 			channelId: NotificationsId,
 			timestamp: fecha,
 		});
 
+		// Se agrega el recordatorio a la lista
+		setNotifications(notifications => [
+			...notifications,
+			{
+				id,
+				timestamp: fecha.getTime(),
+			},
+		]);
+		
+		// Se muestra el toast de confirmación
 		ToastAndroid.show(
 			`${message} ${date.toLocaleTimeString('es-MX', {
 				hour: '2-digit',

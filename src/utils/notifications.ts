@@ -5,6 +5,11 @@ import notifee, {
 } from '@notifee/react-native';
 import {Alert} from 'react-native';
 
+export type Notification = {
+	id: string;
+	timestamp: number;
+};
+
 /**
  * Comprueba si la aplicación tiene permiso para enviar notificaciones.
  * @returns true si tiene permiso, false si no.
@@ -116,16 +121,20 @@ export const scheduleNotification = async (
 	const channel = await notifee.createChannel({
 		id: channelId,
 		name: 'Recordatorios',
-		sound: 'notif'
+		sound: 'notif',
 	});
 
 	return notifee.createTriggerNotification(
 		{
-			title,
+			title: `${title} &#x1F4A4;`,
 			body,
 			subtitle: 'Recordatorio',
 			android: {
-				channelId: channel
+				channelId: channel,
+				smallIcon: 'ic_launcher_round',
+				pressAction: {
+					id: 'eliminar-notificacion',
+				}
 			},
 		},
 		{
