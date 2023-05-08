@@ -10,6 +10,7 @@ type CuentosProps = {
 	navigation: NavigationProp<any>;
 };
 
+//Arreglo con los cuentos y su información
 const cuentos = [
 	{
 		id: 0,
@@ -79,6 +80,7 @@ const cuentos = [
 const CuentosShort = ({navigation}: CuentosProps) => {
 	const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
 	useEffect(() => {
+		//Inicializar TrackPlayer
 		const startPlayer = async () => {
 			try {
 				setIsTrackPlayerInit(true);
@@ -90,11 +92,11 @@ const CuentosShort = ({navigation}: CuentosProps) => {
 	}, []);
 
 	useEffect(() => {
+		//Cargar los cuentos en cola
 		const addTracks = async () => {
 			try {
-				await TrackPlayer.reset(); // Limpia la cola de reproducción antes de agregar nuevas canciones
-				await TrackPlayer.add(cuentos); // Añade todas las canciones a la cola de reproducción
-				const tracks = await TrackPlayer.getQueue();
+				await TrackPlayer.reset(); // Limpia la cola de reproducción antes de agregar nuevos audios
+				await TrackPlayer.add(cuentos); // Añade todos los cuentos a la cola de reproducción
 			} catch (error) {
 				console.log('Error al agregar las canciones a la cola:', error);
 			}
@@ -109,13 +111,13 @@ const CuentosShort = ({navigation}: CuentosProps) => {
 				<View
 					style={{
 						alignSelf: 'flex-start',
-						marginBottom: 10,
+						marginBottom: 15,
 						alignItems: 'center',
 						padding: 15,
 					}}>
 					<Text text60>Selecciona un Audio</Text>
 				</View>
-				<View style={{alignItems: 'center', gap: 20, top: '-1%'}}>
+				<View style={{alignItems: 'center', gap: 20, top: '-3%'}}>
 					{cuentos.map((elemento, i) => (
 						<CardOpcion
 							key={i}

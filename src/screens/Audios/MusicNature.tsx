@@ -10,80 +10,68 @@ type MusicProps = {
 	navigation: NavigationProp<any>;
 };
 
+//Arreglo con sonidos de la naturaleza y su información
 const cancionesNature = [
 	{
 		id: 0,
-		url: 'https://musicarelajante.me/wp-content/uploads/2016/11/Pajaros-Cantores-en-un-amanecer.mp3',
-		title: 'Canto de aves',
-		artist: 'Un canto muy reconfortante',
-		artwork: require('../../assets/images/aves.jpg'),
+		url: 'http://143.198.76.61/somnus-music/14%20-%20Lluvia%20Tropical.mp3',
+		title: 'Lluvia Tropical',
+		artist: 'Que relajante escuchar la lluvia',
+		artwork: require('../../assets/images/lluvia.jpg'),
 	},
 	{
 		id: 1,
-		url: 'http://radioteca.net/media/uploads/old_radioteca/audios/05100003.mp3',
-		title: 'Devonshire Waltz Andante',
-		artist: 'Como estar en un baile sin fin',
-		artwork: require('../../assets/images/dance.jpg'),
+		url: 'http://143.198.76.61/somnus-music/06%20-%20P%c3%a1jaros%20del%20Bosque.mp3',
+		title: 'Canto de Aves',
+		artist: 'Escucha ese bonito cantar',
+		artwork: require('../../assets/images/aves.jpg'),
 	},
 	{
 		id: 2,
-		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Late%20Night%20Radio.mp3',
-		title: 'Late Night Radio',
-		artist: 'Como una noche con amigos',
-		artwork: require('../../assets/images/friends.jpg'),
+		url: 'http://143.198.76.61/somnus-music/09%20-%20Agua%20de%20R%c3%ado%20Fluyendo.mp3',
+		title: 'Agua Corriendo en el Río',
+		artist: 'La paz que produce escuchar correr el agua',
+		artwork: require('../../assets/images/rio.jpg'),
 	},
 	{
 		id: 3,
-		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Night%20in%20Venice.mp3',
-		title: 'Night in Venice',
-		artist: 'Relajate como en una gran noche',
-		artwork: require('../../assets/images/night.jpg'),
+		url: 'http://143.198.76.61/somnus-music/10%20-%20Sonido%20de%20las%20Olas%20del%20Mar.mp3',
+		title: 'Olas del Mar',
+		artist: 'Dejate llevar como en las olas del mar',
+		artwork: require('../../assets/images/olas.jpg'),
 	},
 	{
 		id: 4,
-		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Canon%20in%20D%20for%20Two%20Harps.mp3',
-		title: 'Canon in D for Two Harps',
-		artist: 'Disfruta tus momentos',
-		artwork: require('../../assets/images/momentos.jpg'),
+		url: 'http://143.198.76.61/somnus-music/17%20-%20Sonido%20del%20Viento%20para%20Dormir.mp3',
+		title: 'Viento Silencioso',
+		artist: 'Disfrutar de la soledad',
+		artwork: require('../../assets/images/viento.jpg'),
 	},
 	{
 		id: 5,
-		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/A%20Very%20Brady%20Special.mp3',
-		title: 'A Very Brady Special',
-		artist: 'Recordando los bellos momentos',
-		artwork: require('../../assets/images/recuerdos.jpg'),
+		url: 'http://143.198.76.61/somnus-music/21%20-%20Agua%20en%20la%20Gruta.mp3',
+		title: 'Gruta',
+		artist: 'Experimenta tranquilidad y paz',
+		artwork: require('../../assets/images/gruta.jpg'),
 	},
 	{
 		id: 6,
-		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Stay%20the%20Course.mp3',
-		title: 'Stay the Course',
-		artist: 'Manteniendo el enfoque',
-		artwork: require('../../assets/images/focus.jpg'),
+		url: 'http://143.198.76.61/somnus-music/20%20-%20Grillos.mp3',
+		title: 'Noche en el Bosque',
+		artist: 'Siente la tranquilidad y relajación',
+		artwork: require('../../assets/images/bosque.jpg'),
 	},
 	{
 		id: 7,
-		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sincerely.mp3',
-		title: 'Sincerely',
-		artist: 'Hable con esperanza sobre el futuro.',
-		artwork: require('../../assets/images/futuro.jpg'),
-	},
-	{
-		id: 8,
-		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Past%20Sadness.mp3',
-		title: 'Past Sadness',
-		artist: 'Sentir tristeza puede dar paz',
-		artwork: require('../../assets/images/tristeza.jpg'),
-	},
-	{
-		id: 9,
-		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Smooth%20Lovin.mp3',
-		title: 'Smooth Lovin',
-		artist: 'Se siente tan suave como el amor',
-		artwork: require('../../assets/images/love.jpg'),
-	},
+		url: 'http://143.198.76.61/somnus-music/19%20-%20Naturaleza%20Salvaje.mp3',
+		title: 'En Medio de la Naturaleza',
+		artist: 'Conectando con la naturaleza',
+		artwork: require('../../assets/images/nat.jpg'),
+	}
 ];
 
 const MusicNature = ({navigation}: MusicProps) => {
+	//Inicializar TackPlayer
 	const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
 	useEffect(() => {
 		const startPlayer = async () => {
@@ -97,10 +85,11 @@ const MusicNature = ({navigation}: MusicProps) => {
 	}, []);
 
 	useEffect(() => {
+		//Agregar los sonidos a la cola
 		const addTracks = async () => {
 			try {
-				await TrackPlayer.reset(); // Limpia la cola de reproducción antes de agregar nuevas canciones
-				await TrackPlayer.add(cancionesNature); // Añade todas las canciones a la cola de reproducción
+				await TrackPlayer.reset(); // Limpia la cola de reproducción antes de agregar nuevos audios
+				await TrackPlayer.add(cancionesNature); // Añade todas los cuentos a la cola de reproducción
 				const tracks = await TrackPlayer.getQueue();
 			} catch (error) {
 				console.log('Error al agregar las canciones a la cola:', error);

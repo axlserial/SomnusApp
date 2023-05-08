@@ -11,12 +11,17 @@ type Props = {
 };
 
 const Reproductor: React.FC<Props> = ({route}) => {
+	//Estado para saber si TrackPlayer se ha inicializado
 	const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
+	//Estado para saber si un audio esta siendo reproducido
 	const [isPlaying, setIsPlaying] = useState(false);
+	//Estado para obtener la pista actual
 	const [currentTrack, setCurrentTrack] = useState(route.params);
+	//Hook para obtener el progreso del audio en reproducción
 	const progress = useProgress();
 
 	useEffect(() => {
+		//Inicializar TrackPlayer
 		const startPlayer = async () => {
 			try {
 				setIsTrackPlayerInit(true);
@@ -28,6 +33,7 @@ const Reproductor: React.FC<Props> = ({route}) => {
 	}, []);
 
 	useEffect(() => {
+		//Inicializar y reproducir la pista actual 
 		const initializeTrack = async () => {
 			const {id, url, title, artist, artwork} = currentTrack ?? {
 				id: 0,
@@ -36,6 +42,7 @@ const Reproductor: React.FC<Props> = ({route}) => {
 				artist: '',
 				artwork: '',
 			};
+			//Si se selecciona otra pista se debe saltar a la pista seleccionada
 			if ((await TrackPlayer.getActiveTrackIndex()) != id) {
 				await TrackPlayer.skip(id);
 			}
@@ -48,6 +55,7 @@ const Reproductor: React.FC<Props> = ({route}) => {
 		}
 	}, [isTrackPlayerInit]);
 
+	//Función para pausar o reproducir un audio
 	const onPlayPausePress = async () => {
 		const state = await TrackPlayer.getState();
 		if (state === State.Paused) {
@@ -61,32 +69,34 @@ const Reproductor: React.FC<Props> = ({route}) => {
 			setIsPlaying(true);
 		}
 	};
+	//Función para saltar al audio anterior
 	const skipToPrevius = async () => {
-		const currentIndex = Number(await TrackPlayer.getCurrentTrack()); // Obtener el índice actual de la pista
-		const previusIndex = currentIndex - 1;
-
+		const currentIndex = Number(await TrackPlayer.getCurrentTrack()); // Obtener el índice del audio actual
+		const previusIndex = currentIndex - 1; //Actualizar al nuevo índice
+		//Verificar que exista un audio previo
 		if (previusIndex >= 0) {
-			const previus = await TrackPlayer.getTrack(previusIndex); // Obtener los datos de la pista anterior
+			const previus = await TrackPlayer.getTrack(previusIndex); // Obtener los datos del audio anterior
 			if (previus) {
-				await TrackPlayer.skip(previus.id); // Pasar el id de la pista anterior a skip()
-				setCurrentTrack(previus);
-				await TrackPlayer.play();
+				await TrackPlayer.skip(previus.id); // Pasar el id del audio anterior a skip()
+				setCurrentTrack(previus); //Se actualiza el audio actual
+				await TrackPlayer.play(); //Reproducir audio
 			}
 		}
 	};
 
+	//Función para saltar al proximo audio
 	const skipToNext = async () => {
-		const currentIndex = Number(await TrackPlayer.getCurrentTrack()); // Obtener el índice actual de la pista
-		const nextIndex = currentIndex + 1;
-
-		const next = await TrackPlayer.getTrack(nextIndex); // Obtener los datos de la siguiente pista
+		const currentIndex = Number(await TrackPlayer.getCurrentTrack()); // Obtener el índice del audio actual
+		const nextIndex = currentIndex + 1; //Actualizar al nuevo indice
+		const next = await TrackPlayer.getTrack(nextIndex); // Obtener los datos del audio siguiente
 		if (next) {
-			await TrackPlayer.skip(next.id); // Pasar el id de la siguiente pista a skip()
-			setCurrentTrack(next);
-			await TrackPlayer.play();
+			await TrackPlayer.skip(next.id); // Pasar el id del siguiente audio a skip()
+			setCurrentTrack(next); //Se actualiza el audio actual
+			await TrackPlayer.play(); //Reproducir audio
 		}
 	};
-
+	
+	//Función para darle formato de minutos:segundos al tiempo de duración del audio
 	const formatTime = (seconds: number): string => {
 		const min = Math.floor(seconds / 60);
 		const sec = Math.floor(seconds % 60);
@@ -94,6 +104,7 @@ const Reproductor: React.FC<Props> = ({route}) => {
 	};
 
 	useEffect(() => {
+		//Actualizar el audio actual y reproducirlo
 		const updateCurrentTrack = async () => {
 			const {id, url, title, artist, artwork} = currentTrack ?? {
 				id: 0,

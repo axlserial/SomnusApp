@@ -10,6 +10,7 @@ type MusicProps = {
 	navigation: NavigationProp<any>;
 };
 
+//Arreglo de musica relajante
 const cancionesRelax = [
 	{
 		id: 0,
@@ -64,7 +65,7 @@ const cancionesRelax = [
 		id: 7,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sincerely.mp3',
 		title: 'Sincerely',
-		artist: 'Hable con esperanza sobre el futuro.',
+		artist: 'Reencontrarse para encontrar las esperanzas',
 		artwork: require('../../assets/images/futuro.jpg'),
 	},
 	{
@@ -84,6 +85,7 @@ const cancionesRelax = [
 ];
 
 const MusicRelax = ({navigation}: MusicProps) => {
+	//Inicializar TrackPlayer
 	const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
 	useEffect(() => {
 		const startPlayer = async () => {
@@ -97,9 +99,10 @@ const MusicRelax = ({navigation}: MusicProps) => {
 	}, []);
 	
 	useEffect(() => {
+		//Añadir canciones a la cola
 		const addTracks = async () => {
 			try {
-				await TrackPlayer.reset(); // Limpia la cola de reproducción antes de agregar nuevas canciones
+				await TrackPlayer.reset(); // Limpia la cola de reproducción antes de agregar nuevos audios
 				await TrackPlayer.add(cancionesRelax); // Añade todas las canciones a la cola de reproducción
 				const tracks = await TrackPlayer.getQueue();
 			} catch (error) {

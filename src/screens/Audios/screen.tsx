@@ -41,7 +41,7 @@ const Screen = ({navigation}: ScreenProps) => {
 				navigation={navigation}
 				to="MusicRelax"
 				titulo="Música relajante"
-				desc="Selecciona la pista que desees"
+				desc="Duerme con melodias relajantes"
 				icon="smiley"
 				fondo={image}
 			/>
@@ -49,7 +49,7 @@ const Screen = ({navigation}: ScreenProps) => {
 				navigation={navigation}
 				to="MusicNature"
 				titulo="Sonidos de la naturaleza"
-				desc="Selecciona la pista que desees"
+				desc="Escuchar a la naturaleza da paz"
 				icon="image"
 				fondo={loto}
 			/>
@@ -57,7 +57,7 @@ const Screen = ({navigation}: ScreenProps) => {
 				navigation={navigation}
 				to="CuentosShort"
 				titulo="Cuentos cortos"
-				desc="Selecciona la pista que desees"
+				desc="Ten calma con bonitas historias"
 				icon="book"
 				fondo={cuentos}
 			/>
