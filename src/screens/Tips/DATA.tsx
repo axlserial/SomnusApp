@@ -21,11 +21,11 @@ const DATA = [
 	},
 	{
 		id: 123410,
-		title: 'Alimentación: Los especialistas recomiendan no irse a la cama con hambre ni sintiéndose muy lleno. Es importante evitar las comidas pesadas o muy abundantes un par de horas antes de acostarse.',
+		title: 'Alimentación: Los especialistas recomiendan no irse a la cama con hambre ni sintiéndose muy lleno. Es importante evitar comidas pesadas o abundantes un par de horas antes de acostarse.',
 	},
 	{
 		id: 12311,
-		title: 'Esconder el reloj. Ver las horas pasar puede ser estresante. La recomendación de los expertos de la biblioteca médica Medlineplus es voltear el reloj de manera que se pueda ver desde la almohada, pues esto evitará situaciones de ansiedad y estrés.',
+		title: 'Esconder el reloj. Ver las horas pasar puede ser estresante. La recomendación de los expertos es voltear el reloj de manera que se pueda ver desde la almohada, pues esto evitará situaciones de ansiedad y estrés.',
 	},
 	{
 		id: 12312,

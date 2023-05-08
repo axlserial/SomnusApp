@@ -62,7 +62,7 @@ const Screen = ({ navigation }: ScreenProps) => {
 			<View style={styles.main}>
 				<SafeAreaView style={styles.container}>
 					<ScrollView >
-						<Text style={styles.title}>Tips</Text>
+						<Text text60 style={styles.title}>Tips</Text>
 						<View>
 							{(dataSaveFav[0].id == 0) ?
 								<View style={styles.fixToText}>
@@ -109,10 +109,10 @@ const Screen = ({ navigation }: ScreenProps) => {
 															borderRadius: 10,
 															alignItems: 'center'
 														}}>
-														<Text text30 $textDefault style={{ fontWeight: 'bold' }}>
+														<Text text60 $textDefault style={{ fontWeight: 'bold' }}>
 															Mis favoritos
 														</Text>
-														<Text text80 $textDefault style={styles.cardd}>
+														<Text $textDefault style={styles.cardd}>
 															Tu lista de tips para mejorar tu sueño.
 
 														</Text>
@@ -137,10 +137,10 @@ const Screen = ({ navigation }: ScreenProps) => {
 						</View>
 						{(dataSaveFav.length == 1)
 							?
-							<View style={{ top: "0%" }}>
-								<Text style={styles.subtitle} >Listado</Text>
+							<View style={{ top: "1%" }}>
+								<Text text60 style={styles.subtitle} >Listado</Text>
 								{DATA.map((item2, index2) => (
-									<View key={index2} >
+									<View key={index2} style={{top:5}}>
 										<View style={styles.fixToText}>
 											<Text style={styles.textApp}>{item2.title}</Text>
 											<TouchableOpacity style={{
@@ -157,10 +157,10 @@ const Screen = ({ navigation }: ScreenProps) => {
 								))}
 							</View>
 							:
-							<View style={{ top: "-44%" }}>
-								<Text style={styles.subtitle} >Listado</Text>
+							<View style={{ top: "-42.5%" }}>
+								<Text text60 style={styles.subtitle} >Listado</Text>
 								{DATA.map((item2, index2) => (
-									<View key={index2} >
+									<View key={index2} style={{top:10}}>
 										<View style={styles.fixToText}>
 											<Text style={styles.textApp}>{item2.title}</Text>
 											<TouchableOpacity style={{
@@ -194,14 +194,14 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	title: {
-		fontSize: 36,
 		fontWeight: 'bold',
 		alignItems: "center",
-		justifyContent: "center"
+		justifyContent: "center",
+		top:3
 	},
 	subtitle: {
-		fontSize: 36,
 		fontWeight: 'bold',
+		top:10
 	},
 	textApp: {
 		fontWeight: 'normal',
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
 	fixToText: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		marginVertical: 8,
+		marginVertical: 5,
 		backgroundColor: "#0d2458",
 		width: "96%",
 		marginLeft: "0%",
