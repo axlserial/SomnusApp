@@ -11,6 +11,10 @@ type ScreenProps = {
 	navigation: NavigationProp<any>;
 };
 
+/**
+ * Pantalla principal de la calculadora
+ * @param navigation Objeto de navegación
+ */
 const Screen = ({navigation}: ScreenProps) => {
 	return (
 		<View style={{flex: 1, alignItems: 'center', padding: 15, gap: 10}}>

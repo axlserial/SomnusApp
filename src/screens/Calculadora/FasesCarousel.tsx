@@ -1,4 +1,4 @@
-import {View, Text, Carousel, Spacings} from 'react-native-ui-lib';
+import {View, Text, Carousel} from 'react-native-ui-lib';
 
 // Información de cada fase del sueño
 const sleepCicle = [
@@ -38,6 +38,10 @@ const sleepCicle = [
 	},
 ];
 
+/**
+ * Carousel que muestra la información de cada fase del sueño
+ * para el menú principal
+ */
 const FasesCarousel = () => {
 	return (
 		<Carousel autoplay loop showCounter>

@@ -2,12 +2,16 @@ import Screen from './screen';
 import {Colors} from 'react-native-ui-lib';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+// Screens de la sección de Calculadora
 import ResultadosDespertar from './resultadosDespertar';
 import ResultadosDormir from './ResultadosDormir';
 import Recordatorios from './Recordatorios';
 
 const CalculadoraStack = createNativeStackNavigator();
 
+/**
+ * Stack que contiene las pantallas de la sección de Calculadora
+ */
 const CalculadoraScreen = () => {
 	return (
 		<CalculadoraStack.Navigator

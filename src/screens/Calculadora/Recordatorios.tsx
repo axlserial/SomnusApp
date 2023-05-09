@@ -9,6 +9,9 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import MMKV from '../../notificationStorage';
 import {Notification} from '../../utils';
 
+/**
+ * Pantalla que muestra los recordatorios
+ */
 const Recordatorios = () => {
 	const [notifications, setNotifications] = useMMKVStorage<Notification[]>(
 		'notifications',

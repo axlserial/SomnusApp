@@ -10,6 +10,14 @@ type CardOpcionProps = {
 	icon: string
 };
 
+/**
+ * Card que muestra el botón de una opción del menú principal
+ * @param navigation Navigation para navegar a la pantalla correspondiente
+ * @param to Nombre de la pantalla a la que se navegará
+ * @param titulo Título de la opción
+ * @param desc Descripción de la opción
+ * @param icon Icono de la opción
+ */
 const CardOpcion = ({navigation, to, titulo, desc, icon}: CardOpcionProps) => {
 	return (
 		<Card
@@ -44,7 +52,6 @@ const CardOpcion = ({navigation, to, titulo, desc, icon}: CardOpcionProps) => {
 					borderBottomRightRadius: 10,
 				}}>
 				<Octicons
-					// name="chevron-right"
 					name={icon}
 					size={30}
 					color="white"

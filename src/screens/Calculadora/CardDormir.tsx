@@ -18,6 +18,15 @@ type CardDormirProps = {
 	) => void;
 };
 
+/**
+ * Card que muestra la hora y los ciclos de sueño 
+ * para la pantalla de resultadosDormir.tsx y
+ * establece un recordatorio para ir a dormir 
+ * @param hora Hora en la que se debe despertar
+ * @param ciclos Cantidad de ciclos de sueño
+ * @param total Total de horas de sueño
+ * @param setNotifications Función para establecer los recordatorios 
+ */
 const CardDormir = ({
 	hora,
 	ciclos,
