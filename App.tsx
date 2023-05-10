@@ -1,7 +1,6 @@
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import notifee, {EventType} from '@notifee/react-native';
-import SplashScreen from 'react-native-splash-screen';
 import {ToastAndroid, StatusBar} from 'react-native';
 import {Colors} from 'react-native-ui-lib';
 import {useEffect, useState} from 'react';
@@ -57,9 +56,6 @@ const App = () => {
 				'Error al iniciar dependencias de la aplicación',
 				ToastAndroid.SHORT,
 			);
-		} finally {
-			// Ocultar SplashScreen
-			SplashScreen.hide();
 		}
 	};
 

@@ -120,8 +120,7 @@ export const scheduleNotification = async (
 
 	const channel = await notifee.createChannel({
 		id: channelId,
-		name: 'Recordatorios',
-		sound: 'notif',
+		name: 'Recordatorios'
 	});
 
 	return notifee.createTriggerNotification(

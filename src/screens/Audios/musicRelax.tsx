@@ -17,7 +17,7 @@ const cancionesRelax = [
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Space%20Jazz.mp3',
 		title: 'Space Jazz',
 		artist: 'Como estar en un videojuego tranquilamente',
-		artwork: require('../../assets/images/space.png'),
+		artwork: require('../../assets/images/space.jpg'),
 	},
 	{
 		id: 1,
@@ -37,7 +37,7 @@ const cancionesRelax = [
 		id: 3,
 		url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Night%20in%20Venice.mp3',
 		title: 'Night in Venice',
-		artist: 'Relajate como en una gran noche',
+		artist: 'Relájate como en una gran noche',
 		artwork: require('../../assets/images/night.jpg'),
 	},
 	{

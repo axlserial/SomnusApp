@@ -18,4 +18,15 @@ buildscript {
         classpath("com.android.tools.build:gradle:7.3.1")
         classpath("com.facebook.react:react-native-gradle-plugin")
     }
+
+	subprojects { project -> 
+  		afterEvaluate {
+        	if((project.plugins.hasPlugin('android') || project.plugins.hasPlugin('android-library'))) {
+            	android {
+                	compileSdkVersion rootProject.ext.compileSdkVersion
+                	buildToolsVersion rootProject.ext.buildToolsVersion
+            	}
+        	}
+    	}
+	}
 }
